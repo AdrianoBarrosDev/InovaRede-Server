@@ -40,7 +40,7 @@ public class UserService {
                 createUserDto.name(),
                 createUserDto.email(), 
                 createUserDto.password(), // Criptografar futuramente
-                createUserDto.classroom(),
+                createUserDto.course(),
                 createUserDto.image(),
                 Instant.now(), 
                 null,
@@ -87,8 +87,8 @@ public class UserService {
             if(updateUserDto.password() != null) {
                 user.setPassword(updateUserDto.password());
             }
-            if(updateUserDto.classroom() != null) {
-                user.setClassroom(updateUserDto.classroom());
+            if(updateUserDto.course() != null) {
+                user.setCourse(updateUserDto.course());
             }
             if(updateUserDto.image() != null) {
                 user.setImage(updateUserDto.image());

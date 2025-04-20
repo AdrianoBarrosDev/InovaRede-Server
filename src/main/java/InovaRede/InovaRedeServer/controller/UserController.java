@@ -3,12 +3,16 @@ package InovaRede.InovaRedeServer.controller;
 import InovaRede.InovaRedeServer.controller.dto.AssociateUserProjectDto;
 import InovaRede.InovaRedeServer.controller.dto.UpdateUserDto;
 import InovaRede.InovaRedeServer.controller.dto.CreateUserDto;
+import InovaRede.InovaRedeServer.controller.dto.LoginRequestDto;
 import InovaRede.InovaRedeServer.controller.dto.UserProjectResponseDto;
 import InovaRede.InovaRedeServer.entity.User;
 import InovaRede.InovaRedeServer.service.UserService;
 import java.net.URI;
 import java.util.List;
+import java.util.Optional;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+@CrossOrigin(origins = "http://localhost:5173")
 @RestController
 @RequestMapping("/users")
 public class UserController {
@@ -57,6 +62,24 @@ public class UserController {
         } else { // Se o usuário não existir, retorna o erro 404 na API
             return ResponseEntity.notFound().build();
         }
+    }
+    
+    @PostMapping("/login")
+    public ResponseEntity<String> login(@RequestBody LoginRequestDto loginRequest) {
+        String username = loginRequest.username();
+        String password = loginRequest.password();
+        
+        Optional<User> userOptional = userService.getUserByUsername(username);
+
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+
+            // Verifica se a senha está correta
+            if (user.getPassword().equals(password)) {
+                return ResponseEntity.ok("Login bem-sucedido");
+            }
+        }
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Credenciais inválidas");
     }
     
     // Método para listar todos os usuários

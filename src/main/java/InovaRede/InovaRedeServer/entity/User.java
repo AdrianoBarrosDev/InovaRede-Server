@@ -36,8 +36,8 @@ public class User {
     @Column(name = "password")
     private String password;
     
-    @Column(name = "classroom")
-    private String classroom;
+    @Column(name = "course")
+    private String course;
     
     @Column(name = "image")
     private String image; // Imagem Base64
@@ -59,13 +59,13 @@ public class User {
     public User() {
     }
 
-    public User(UUID userId, String username, String name, String email, String password, String classroom, String image, Instant creationTimestamp, Instant updateTimestamp, Long version) {
+    public User(UUID userId, String username, String name, String email, String password, String course, String image, Instant creationTimestamp, Instant updateTimestamp, Long version) {
         this.userId = userId;
         this.username = username;
         this.name = name;
         this.email = email;
         this.password = password;
-        this.classroom = classroom;
+        this.course = course;
         this.image = image;
         this.creationTimestamp = creationTimestamp;
         this.updateTimestamp = updateTimestamp;
@@ -112,12 +112,12 @@ public class User {
         this.password = password;
     }
 
-    public String getClassroom() {
-        return classroom;
+    public String getCourse() {
+        return course;
     }
 
-    public void setClassroom(String classroom) {
-        this.classroom = classroom;
+    public void setCourse(String course) {
+        this.course = course;
     }
 
     public String getImage() {
