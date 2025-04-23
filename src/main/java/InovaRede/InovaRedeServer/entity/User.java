@@ -39,7 +39,7 @@ public class User {
     @Column(name = "course")
     private String course;
     
-    @Column(name = "image")
+    @Column(name = "image", columnDefinition = "LONGTEXT")
     private String image; // Imagem Base64
     
     @CreationTimestamp

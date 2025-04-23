@@ -30,7 +30,8 @@ public class ProjectService {
                 createProjectDto.description(),
                 createProjectDto.start_date(),
                 createProjectDto.end_date(),
-                createProjectDto.image()
+                createProjectDto.image(),
+                createProjectDto.course()
         );
         
         var projectSaved = projectRepository.save(project); // Salva o projeto no banco de dados

@@ -32,8 +32,11 @@ public class Project {
     @Column(name = "end_date")
     private String end_date;
     
-    @Column(name = "image")
+    @Column(name = "image", columnDefinition = "LONGTEXT")
     private String image; // Image Base64
+    
+    @Column(name = "course")
+    private String course;
     
     @OneToMany(mappedBy = "project")
     @JsonManagedReference("project-userProject")
@@ -42,13 +45,14 @@ public class Project {
     public Project() {
     }
 
-    public Project(UUID projectId, String name, String description, String start_date, String end_date, String image) {
+    public Project(UUID projectId, String name, String description, String start_date, String end_date, String image, String course) {
         this.projectId = projectId;
         this.name = name;
         this.description = description;
         this.start_date = start_date;
         this.end_date = end_date;
         this.image = image;
+        this.course = course;
     }
 
     public UUID getProjectId() {
@@ -97,6 +101,14 @@ public class Project {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public String getCourse() {
+        return course;
+    }
+
+    public void setCourse(String course) {
+        this.course = course;
     }
     
 }
