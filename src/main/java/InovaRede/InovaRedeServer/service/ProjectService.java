@@ -2,7 +2,9 @@ package InovaRede.InovaRedeServer.service;
 
 import InovaRede.InovaRedeServer.controller.dto.CreateProjectDto;
 import InovaRede.InovaRedeServer.entity.Project;
+import InovaRede.InovaRedeServer.entity.User;
 import InovaRede.InovaRedeServer.repository.ProjectRepository;
+import InovaRede.InovaRedeServer.repository.UserRepository;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -12,9 +14,11 @@ import org.springframework.stereotype.Service;
 public class ProjectService {
     
     private ProjectRepository projectRepository;
+    private UserRepository userRepository;
 
-    public ProjectService(ProjectRepository projectRepository) {
+    public ProjectService(ProjectRepository projectRepository, UserRepository userRepository) {
         this.projectRepository = projectRepository;
+        this.userRepository = userRepository;
     }
     
     public Optional<Project> getProjectById(String projectId) {
@@ -22,6 +26,8 @@ public class ProjectService {
     }
     
     public UUID createProject(CreateProjectDto createProjectDto) {
+        
+        User owner = userRepository.findById(createProjectDto.ownerId()).orElse(null);
         
         // DTO -> Entity
         var project = new Project(
@@ -31,7 +37,8 @@ public class ProjectService {
                 createProjectDto.start_date(),
                 createProjectDto.end_date(),
                 createProjectDto.image(),
-                createProjectDto.course()
+                createProjectDto.course(),
+                owner
         );
         
         var projectSaved = projectRepository.save(project); // Salva o projeto no banco de dados

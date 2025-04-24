@@ -1,5 +1,6 @@
 package InovaRede.InovaRedeServer.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -55,6 +56,14 @@ public class User {
     @OneToMany(mappedBy = "user")
     @JsonManagedReference("project-userProject")
     private List<UserProject> userProject;
+    
+    @OneToMany(mappedBy = "owner")
+    private List<Project> myProjects;
+    
+    @OneToMany(mappedBy = "recipient")
+    @JsonManagedReference("user-solicitation-recipient")
+    @JsonIgnore
+    private List<Solicitation> solicitationsReceived;
 
     public User() {
     }
@@ -158,6 +167,14 @@ public class User {
 
     public void setUserProject(List<UserProject> userProject) {
         this.userProject = userProject;
+    }
+
+    public List<Solicitation> getSolicitationsReceived() {
+        return solicitationsReceived;
+    }
+
+    public void setSolicitationsReceived(List<Solicitation> solicitationsReceived) {
+        this.solicitationsReceived = solicitationsReceived;
     }
     
 }

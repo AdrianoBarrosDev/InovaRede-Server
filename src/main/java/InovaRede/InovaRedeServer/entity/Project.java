@@ -6,6 +6,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import java.util.List;
@@ -38,6 +40,10 @@ public class Project {
     @Column(name = "course")
     private String course;
     
+    @ManyToOne
+    @JoinColumn(name = "owner_id")
+    private User owner;
+    
     @OneToMany(mappedBy = "project")
     @JsonManagedReference("project-userProject")
     private List<UserProject> userProject;
@@ -45,7 +51,7 @@ public class Project {
     public Project() {
     }
 
-    public Project(UUID projectId, String name, String description, String start_date, String end_date, String image, String course) {
+    public Project(UUID projectId, String name, String description, String start_date, String end_date, String image, String course, User owner) {
         this.projectId = projectId;
         this.name = name;
         this.description = description;
@@ -53,6 +59,7 @@ public class Project {
         this.end_date = end_date;
         this.image = image;
         this.course = course;
+        this.owner = owner;
     }
 
     public UUID getProjectId() {
@@ -109,6 +116,14 @@ public class Project {
 
     public void setCourse(String course) {
         this.course = course;
+    }
+
+    public User getOwner() {
+        return owner;
+    }
+
+    public void setOwner(User owner) {
+        this.owner = owner;
     }
     
 }
